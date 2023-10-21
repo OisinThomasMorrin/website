@@ -47,11 +47,30 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA}`}></script>
+      <script
+      dangerouslySetInnerHTML={
+        {
+          __html: `
+          if (window.location.hostname !== "localhost") {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+  
+            gtag('config', '${process.env.GA}');
+          }
+          `
+        }
+      }
+      >
+      </script>
+      </head>
       <body
         className={cx(montserrat.variable, "font-ms bg-light dark:bg-dark")}
       >
         <Header />
         {children}</body>
-    </html>
+    </html >
   )
 }
